@@ -15,7 +15,6 @@ classes = {
 }
 
 
-
 class FileStorage:
     """This class manages storage of hbnb models in JSON format"""
     __file_path = 'file.json'
@@ -44,16 +43,14 @@ class FileStorage:
 
     def delete(self, obj=None):
         """Delete obj from __objects if its inside"""
-        if (self.__objects[key] and obj is not None):
-            key = "{}.{}".format(type(obj).__name__, obj.id)
-    
+        if (obj is not None):
+            key = "{}.{}".format(obj.__class__.__name__, obj.id)
+
             del self.__objects[key]
             self.save()
 
     def reload(self):
         """Loads storage dictionary from file"""
-    
-    
         try:
             temp = {}
             with open(FileStorage.__file_path, 'r') as f:
