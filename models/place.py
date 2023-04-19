@@ -3,9 +3,10 @@
 from models.base_model import BaseModel
 
 
-class Place(BaseModel):
+class Place(BaseModel, Base):
     """ A place to stay """
-    city_id = ""
+    __tablename__ = "places"
+    city_id = 
     user_id = ""
     name = ""
     description = ""
