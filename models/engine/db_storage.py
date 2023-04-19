@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-u
-=======
 #!/usr/bin/python3
 """Defines dbstorage class"""
 
@@ -25,4 +22,3 @@ class DBStorage():
         if cls is None:
             objs = self.__session.query()
         return (
->>>>>>> 16cd3379872178456912f305a058ba7fa62d62b9
