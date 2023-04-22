@@ -96,6 +96,8 @@ class test_basemodel(unittest.TestCase):
         """ """
         new = self.value()
         self.assertEqual(type(new.updated_at), datetime.datetime)
-
+        kw = new.to_dict()
+        new = BaseModel(**kw)
+        self.assertTrue(new.created_at != new.updated_at)
     if __name__ == "__main__":
         unittest.main()
