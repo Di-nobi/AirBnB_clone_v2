@@ -8,6 +8,7 @@ from sqlalchemy import Column, Integer, String, DateTime
 from os import getenv
 from sqlalchemy import Column, String, DateTime
 
+time_fmt = "%Y-%m-%dT%H:%M:%S.%f"
 if getenv("HBNB_TYPE_STORAGE") == 'db':
     Base = declarative_base()
 else:
@@ -53,7 +54,7 @@ class BaseModel:
 
     def __str__(self):
         """Returns a string representation of the instance"""
-        return '[{}] ({}) {}'.format(cls, self.id, self.__dict__)
+        return '[{}] ({}) {}'.format(self.__class__.__name__, self.id, self.__dict__)
 
     def save(self):
         """Updates updated_at with current time when instance is changed"""
@@ -69,7 +70,7 @@ class BaseModel:
         dictionary["__class__"] = str(type(self).__name__)
         dictionary['created_at'] = self.created_at.isoformat()
         dictionary['updated_at'] = self.updated_at.isoformat()
-        if '_sa_instance_state' in dictionary.key:
+        if '_sa_instance_state' in dictionary:
             del dictionary['_sa_instance_state']
         return dictionary
 

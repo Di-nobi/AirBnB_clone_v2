@@ -10,7 +10,7 @@ from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.review import Review
-
+import re
 
 class HBNBCommand(cmd.Cmd):
     """ Contains the functionality for the HBNB console"""
@@ -113,34 +113,41 @@ class HBNBCommand(cmd.Cmd):
         """ Overrides the emptyline method of CMD """
         pass
 
-    def do_create(self, args, **kwargs):
+    def do_create(self, args):
         """ Create an object of any class"""
         if not args:
             print("** class name missing **")
             return
-        elif args not in HBNBCommand.classes:
+        
+        args_f = args.split()
+        print(args_f)
+        class_name = args_f[0]
+        if (class_name not in HBNBCommand.classes):
             print("** class doesn't exist **")
             return
-        new_instance = HBNBCommand.classes[args]()
-
-        if (args and kwargs):
-            str_pattern = "^\"[^ ]+\""
-            int_pattern = "[+-]?\d+"
-            float_pattern = "[+-]?\d+\.\d+"
-            patterns = [str_pattern, int_pattern, float_pattern]
-            for key, value in kwargs.items():
-                for pat in patterns:
-                    if (re.match(pat, str(value))):
-                        arg_pat = pat
-                        if (arg_pat == str_pattern):
-                            setattr(new_instance, (key), value.replace('_', ' '))
-                        elif (arg_pat == int_pattern):
-                            setattr(new_instance, (key), int(value))
-                        else:
-                            setattr(new_instance, (key), float(value))
-        storage.save()
+        new_instance = HBNBCommand.classes[class_name]()
+        if (len(args_f) > 1):
+            i = 1
+            for i in range(len(args_f)):
+                kwarg = args_f[i].split("=")
+                str_pattern = "^\"[^ ]+\""
+                int_pattern = "[+-]?\d+"
+                float_pattern = "[+-]?\d+\.\d+"
+                patterns = [str_pattern, int_pattern, float_pattern]
+                if len(kwarg) == 2:
+                    value = kwarg[1]
+                    key = kwarg[0].strip("'\"")
+                    for pat in patterns:
+                        if (re.fullmatch(pat, str(value))):
+                            arg_pat = pat
+                            if (arg_pat == str_pattern):
+                                setattr(new_instance, key, value.replace('_', ' ').strip("'\""))
+                            elif (arg_pat == int_pattern):
+                                setattr(new_instance, (key), int(value))
+                            else:
+                                setattr(new_instance, (key), float(value))
+        new_instance.save()
         print(new_instance.id)
-        storage.save()
 
     def help_create(self):
         """ Help information for the create method """
