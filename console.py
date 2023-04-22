@@ -120,7 +120,6 @@ class HBNBCommand(cmd.Cmd):
             return
         
         args_f = args.split()
-        print(args_f)
         class_name = args_f[0]
         if (class_name not in HBNBCommand.classes):
             print("** class doesn't exist **")
