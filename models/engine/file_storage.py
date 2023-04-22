@@ -1,4 +1,4 @@
-#!/u//fsr/bin/python3
+#!/usr/bin/python3
 """This module defines a class to manage file storage for hbnb clone"""
 import json
 from models.user import User
@@ -26,7 +26,7 @@ class FileStorage:
             return FileStorage.__objects
 
         return {key: value for key, value in self.__objects.items()
-                if type(val) == cls}
+                if type(value) == cls}
 
     def new(self, obj):
         """Adds new object to storage dictionary"""
