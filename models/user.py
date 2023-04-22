@@ -8,9 +8,9 @@ import models
 import hashlib
 
 
-class User(BaseModel, Base):
+class User(BaseModel):
     """user class model"""
-    if getenv('HBNB_TYPE_STORAGE') == 'db':
+    """if getenv('HBNB_TYPE_STORAGE') == 'db':
         __tablename__ = 'users'
         email = Column(String(128),
                        nullable=False)
@@ -26,15 +26,13 @@ class User(BaseModel, Base):
                               cascade="all, delete-orphan")
         reviews = relationship("Review",
                                backref="user",
-                               cascade="all, delete-orphan")
-    else:
-        email = ""
-        _password = ""
-        first_name = ""
-        last_name = ""
+                               cascade="all, delete-orphan")"""
+    email = ""
+    _password = ""
+    first_name = ""
+    last_name = ""
 
-    def __init__(self, *args, **kwargs):
-        """initializes user"""
+    """def __init__(self, *args, **kwargs):s
         super().__init__(*args, **kwargs)
 
     @property
@@ -43,4 +41,4 @@ class User(BaseModel, Base):
 
     @password.setter
     def password(self, pwd):
-        self._password = pwd
+        self._password = pwd"""
