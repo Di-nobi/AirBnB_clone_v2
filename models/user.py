@@ -6,7 +6,9 @@ from sqlalchemy.orm import relationship
 from os import getenv
 import models
 import hashlib
-
+from models.place import Place
+from models.review import Review
+from sqlalchemy.ext.declarative import declarative_base
 
 class User(BaseModel, Base):
     """user class model"""
