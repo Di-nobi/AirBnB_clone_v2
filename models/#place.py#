@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" holds class Place"""
+""" class place"""
 import models
 from models.base_model import BaseModel, Base
 from os import getenv
@@ -15,7 +15,7 @@ if getenv('HBNB_TYPE_STORAGE') == 'db':
 
 
 class Place(BaseModel, Base):
-    """Representation of Place """
+    """place class model"""
     if getenv('HBNB_TYPE_STORAGE') == 'db':
         __tablename__ = 'places'
         city_id = Column(String(60),
@@ -67,7 +67,7 @@ class Place(BaseModel, Base):
 
     @property
     def reviews(self):
-        """attribute that returns list of Review instances"""
+        """returns review list"""
         values_review = models.storage.all("Review").values()
         list_review = []
         for review in values_review:
