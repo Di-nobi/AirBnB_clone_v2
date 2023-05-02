@@ -3,24 +3,19 @@
 from models.base_model import BaseModel, Base
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Integer, Column, String
-from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship
 from os import getenv
-
+import models
 
 class State(BaseModel, Base):
     """ State class """
     if getenv('HBNB_TYPE_STORAGE') == 'db':
         __tablename__ = "states"
         name = Column(String(128), nullable=False)
-        cities = relationship("City", cascade="all, delete", backref="states")
+        cities = relationship("City", cascade="all, delete, delete-orphan", backref="state")
     else:
         name = ""
         cities = ""
-
-    def __init__(self, *args, **kwargs):
-        """initializes state"""
-        super().__init__(*args, **kwargs)
 
     if getenv('HBNB_TYPE_STORAGE') != 'db':
         @property
