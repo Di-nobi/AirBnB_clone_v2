@@ -12,7 +12,7 @@ sudo mkdir -p /data/web_static/releases/
 sudo mkdir -p /data/web_static/shared/
 sudo mkdir -p /data/web_static/releases/test/
 # prints message to file
-sudo echo "Welcome to michael website" | sudo tee /data/web_static/releases/test/index.html
+sudo echo "Welcome to Stanleys site" | sudo tee /data/web_static/releases/test/index.html
 
 # creates symbolic link
 sudo ln -sf /data/web_static/releases/test/ /data/web_static/current
