@@ -23,9 +23,7 @@ def do_pack():
         return None
 def do_deploy(archive_path):
     """Deploying to server"""
-    if not os.path.exists(archive_path):
-        return False
-    else:
+    if os.path.exists(archive_path):
         file = archive_path[9:]
         new_version = "/data/web_static/releases/" + file[:-4]
         file = "/tmp" + file
@@ -38,5 +36,5 @@ def do_deploy(archive_path):
         run('sudo rm -rf /data/web_static/current')
         run('sudo ln -s {} /data/web_static/current'.format(new_version))
         print("New version deployed")
-
         return True
+    return False
