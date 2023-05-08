@@ -13,7 +13,8 @@ def do_pack():
     final = local("tar -cvzf versions/web_static_{}.tgz web_static/".format(time.strftime("%Y%m%d%H%M%S")))
     if final.failed:
         return None
-    return final
+    else:
+        return final
 
 def do_deploy(archive_path):
     """Deploying an archive to server"""
