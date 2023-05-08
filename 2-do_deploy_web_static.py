@@ -2,11 +2,25 @@
 """ A fabric script that distributes an archive to your
 web servers"""
 from fabric.operations import local, run, put
-from fabric.api import env
-import time
+from fabric.api import *
+from datetime import datetime
 import os
 env.hosts = ["34.203.29.12", "34.227.90.80"]
 env.user = "ubuntu"
+
+def do_pack():
+    """
+    return the archive path if achive is generated correctly
+    """
+    local("mkdir -p versions")
+    datestamp = datetime.now().strftime("%Y%m%d%H%H%S")
+    first_archive = "versions/web_static_{}.tgz".format(datestamp)
+    archieved = local("tar -cvzf {} web_static".format(first_archive))
+
+    if archieved.succeeded:
+        return first_archived
+    else:
+        return None
 def do_deploy(archive_path):
     """Deploying to server"""
     if not os.path.exists(archive_path):
