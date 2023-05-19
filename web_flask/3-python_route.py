@@ -19,6 +19,7 @@ def c_is_fun(text):
     """ Displays C fllowed by the value of the text """
     return 'C {}'.format(text.replace('_', ' '))
 
+@app.route('/python')
 @app.route('/python/<text>')
 def python_is_cool(text):
     """ Displays Python followed by the value of text variable """
