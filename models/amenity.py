@@ -4,6 +4,8 @@ from models.base_model import BaseModel, Base
 from sqlalchemy.orm import relationship
 from sqlalchemy import Column, String
 from os import getenv
+from models.place import place_amenity
+import models
 
 class Amenity(BaseModel, Base):
     """Representation of Amenity """
@@ -11,6 +13,7 @@ class Amenity(BaseModel, Base):
         __tablename__ = 'amenities'
         name = Column(String(128),
                       nullable=False)
+        place_amenities = relationship("Place", secondary=place_amenity)
     else:
         name = ""
 
