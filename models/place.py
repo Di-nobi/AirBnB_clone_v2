@@ -1,7 +1,10 @@
 #!/usr/bin/python3
 """ holds class Place"""
 import models
+from sqlalchemy.ext.declarative import declarative_base
 from models.base_model import BaseModel, Base
+from models.amenity import Amenity
+from models.review import Review
 from os import getenv
 import sqlalchemy
 from sqlalchemy import Column, String, Integer, Float, Table, ForeignKey

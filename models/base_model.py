@@ -9,11 +9,8 @@ from os import getenv
 from sqlalchemy import Column, String, DateTime
 
 time_fmt = "%Y-%m-%dT%H:%M:%S.%f"
-if getenv("HBNB_TYPE_STORAGE") == 'db':
-    Base = declarative_base()
-else:
-    Base = object
-
+#iif getenv("HBNB_TYPE_STORAGE") == 'db':
+Base = declarative_base()
 
 class BaseModel:
     """A base class for all hbnb models"""
@@ -43,8 +40,8 @@ class BaseModel:
         """Updates updated_at with current time when instance is changed"""
         from models import storage
         self.updated_at = datetime.now()
-        models.storage.new(self)
-        models.storage.save()
+        storage.new(self)
+        storage.save()
 
     def to_dict(self):
         """Convert instance into dict format"""
