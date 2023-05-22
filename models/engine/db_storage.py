@@ -11,7 +11,7 @@ from models.place import Place
 from models.state import State
 from models.review import Review
 from models.user import User
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, MetaData
 from sqlalchemy.orm import sessionmaker, scoped_session
 name2class = {
     'Amenity': Amenity,
@@ -35,25 +35,26 @@ class DBStorage:
         host = os.getenv('HBNB_MYSQL_HOST')
         database = os.getenv('HBNB_MYSQL_DB')
         self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'
-                                      .format(user, passwd, host, database))
+                                      .format(user, passwd, host, database), pool_pre_ping=True)
         if os.getenv('HBNB_ENV') == 'test':
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
         """returns a dictionary of all the objects present"""
-        if not self.__session:
-            self.reload()
-        objects = {}
-        if type(cls) == str:
-            cls = name2class.get(cls, None)
-        if cls:
-            for obj in self.__session.query(cls):
-                objects[obj.__class__.__name__ + '.' + obj.id] = obj
+        item = {}
+        if cls is None:
+            for i in name2class.values():
+                objets = self.__session.query(i).all()
+
+                for obj in objets:
+                    key = obj.__class__.__name__ + '.' + obj.id
+                    item[key] = obj
         else:
-            for cls in name2class.values():
-                for obj in self.__session.query(cls):
-                    objects[obj.__class__.__name__ + '.' + obj.id] = obj
-        return objects
+            objs = self.__session.query(cls).all()
+            for obj in objs:
+                key = obj.__class__.__name__ + '.' + obj.id
+                item[key] = obj
+        return item
 
     def reload(self):
         """reloads objects from the database"""
@@ -79,4 +80,4 @@ class DBStorage:
 
     def close(self):
         """Dispose of current session if active"""
-        self.__session.remove()
+        self.__session.close()
