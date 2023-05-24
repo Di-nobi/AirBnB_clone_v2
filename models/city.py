@@ -5,7 +5,6 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Integer, Column, String
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship
-from models.place import Place
 from os import getenv
 
 

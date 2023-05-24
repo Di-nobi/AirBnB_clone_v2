@@ -10,7 +10,7 @@ import sqlalchemy
 from sqlalchemy import Column, String, Integer, Float, Table, ForeignKey
 from sqlalchemy.orm import relationship
 
-place_amenity = Table('place_amenity', Base.metadata, Column('place_id', String(60), ForeignKey('places.id'), primary_key=True, nullable=False), 
+associate_table = Table('place_amenity', Base.metadata, Column('place_id', String(60), ForeignKey('places.id'), primary_key=True, nullable=False), 
         Column('amenity_id', String(60), ForeignKey('amenities.id'), primary_key=True, nullable=False))
 
 
@@ -42,12 +42,11 @@ class Place(BaseModel, Base):
                                 nullable=False)
         latitude = Column(Float, nullable=True)
         longitude = Column(Float, nullable=True)
-        reviews = relationship("Review", cascade="all, delete",
+        reviews = relationship("Review", cascade="delete",
                                backref="place")
         amenities = relationship("Amenity",
                                  secondary='place_amenity',
-                                 viewonly=False,
-                                 backref="place_amenities")
+                                 viewonly=False)
     else:
         city_id = ""
         user_id = ""
