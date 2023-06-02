@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """ A fabric script that distributes an archive to your
 web servers"""
-from fabric.operations import local, run, put
 from fabric.api import *
 from datetime import datetime
 import os
@@ -24,13 +23,13 @@ def do_pack():
 def do_deploy(archive_path):
     """Deploying to server"""
     if os.path.exists(archive_path):
-        file = archive_path[9:]
-        new_version = "/data/web_static/releases/" + file[:-4]
-        file = "/tmp" + file
-        put(archive_path, "/tmp")
+        ach_file = archive_path[9:]
+        new_version = "/data/web_static/releases/" + ach_file[:-4]
+        ach_file = "/tmp/" + ach_file
+        put(archive_path, "/tmp/")
         run('sudo mkdir -p {}'.format(new_version))
-        run('sudo tar -xzf {} -C {}/'.format(file, new_version))
-        run('sudo rm {}'.format(file))
+        run('sudo tar -xzf {} -C {}/'.format(ach_file, new_version))
+        run('sudo rm {}'.format(ach_file))
         run('sudo mv {}/web_static/* {}'.format(new_version, new_version))
         run('sudo rm -rf {}/web_static'.format(new_version))
         run('sudo rm -rf /data/web_static/current')
