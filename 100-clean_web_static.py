@@ -9,9 +9,9 @@ def do_clean(number=0):
     """ A fabric script that deletes out of date archives """
     number = int(number)
     if number == 0:
-        number = 1
+        number = 2
     else:
-        number
+        number += 1
 
     local('cd versions ; ls -t | tail -n +{} | xargs rm -rf'.format(number))
     way = '/data/web_static/releases'
